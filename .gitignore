@@ -1,5 +1,7 @@
-# Build directory
+# Build directories
 build/
+Release/
+Debug/
 
 # Vim files
 *.swp

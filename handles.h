@@ -1,5 +1,7 @@
 #pragma once
 
-void* adc_handle(void*);
-void* gpio_handle(void*);
-void* app_handle(void*);
+#include <iostream>
+
+void* main_adc(void*);
+void* main_gpio(void*);
+void* main_app(void*);

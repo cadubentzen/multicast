@@ -4,8 +4,9 @@
 
 #include "log.h"
 
-void* gpio_handle(void*)
+void* main_gpio(void* arg)
 {
+    char *__flag_stop = (char*) arg;
     while (1) {
         // Read GPIO to select port
         // TODO
@@ -21,5 +22,9 @@ void* gpio_handle(void*)
         // FIXME: After implementing this function, remove
         //        lines below
         __LOG();
+        
+        if (*__flag_stop) break;
     }
+
+    std::cerr << "GPIO thread ending..." << std::endl;
 }
