@@ -6,20 +6,22 @@ find_package(Threads REQUIRED)
 
 option(BEAGLE "Whether we are compiling for BeagleBone" OFF)
 
-set(MultiCast_SOURCES
+set(Beagle_SOURCES
     adc.cpp
-    main_adc.cpp
-    main_gpio.cpp
-    main_app.cpp
-    main.cpp)
+    subroutine_adc.cpp
+    subroutine_gpio.cpp
+    main_beagle.cpp)
 
-add_executable(multicast ${MultiCast_SOURCES})
+set(App_SOURCES
+    main_app.cpp)
 
-target_link_libraries(multicast
+add_executable(beagle ${Beagle_SOURCES})
+add_executable(app ${App_SOURCES})
+
+target_link_libraries(beagle
     -lpthread)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message("DEBUG type")
     add_definitions(-DDEBUG)
 endif()
 

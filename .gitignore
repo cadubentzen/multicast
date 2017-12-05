@@ -5,3 +5,6 @@ Debug/
 
 # Vim files
 *.swp
+
+# For YouCompleteMe
+compile_commands.json

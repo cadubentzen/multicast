@@ -1,4 +1,4 @@
-#include "handles.h"
+#include "beagle_subroutines.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -13,22 +13,22 @@ typedef BeagleADC PlatformADC;
 typedef FakeADC PlatformADC;
 #endif
 
-void* main_adc(void* arg)
+void* subroutine_adc(void* arg)
 {
-    char *__flag_stop = (char*) arg;
+    ThreadData *data = static_cast<ThreadData*>(arg);
     float adc_values[2];
 
     PlatformADC::singleton()->initialize();
 
     // MulticastSocket multicastSocket (IP, PORT);
-    
+
     while (1) {
         // Read ADC values
         adc_values[0] =  PlatformADC::singleton()->getADC1();
         adc_values[1] =  PlatformADC::singleton()->getADC2();
-         
+
         // Write ADC values to multicast socket
-       //  multicastSocket.write((void*)adc_values, sizeof(adc_values));
+        //  multicastSocket.write((void*)adc_values, sizeof(adc_values));
         // TODO
 
         // Sleep 1 second
@@ -38,9 +38,9 @@ void* main_adc(void* arg)
         //        lines below
         __LOG();
 
-        if (*__flag_stop) break;
+        if (data->flag_stop) break;
         // TODO: Add a flag to stop the thread
     }
-    
+
     std::cerr << "ADC thread ending..." << std::endl;
 }

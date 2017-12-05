@@ -1,12 +1,12 @@
-#include "handles.h"
+#include "beagle_subroutines.h"
 
 #include <unistd.h>
 
 #include "log.h"
 
-void* main_gpio(void* arg)
+void* subroutine_gpio(void* arg)
 {
-    char *__flag_stop = (char*) arg;
+    ThreadData *data = static_cast<ThreadData*>(arg);
     while (1) {
         // Read GPIO to select port
         // TODO
@@ -18,12 +18,12 @@ void* main_gpio(void* arg)
         // TODO
 
         sleep(1);
-        
+
         // FIXME: After implementing this function, remove
         //        lines below
         __LOG();
-        
-        if (*__flag_stop) break;
+
+        if (data->flag_stop) break;
     }
 
     std::cerr << "GPIO thread ending..." << std::endl;

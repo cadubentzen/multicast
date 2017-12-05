@@ -1,12 +1,9 @@
-#include "handles.h"
-
 #include <unistd.h>
 
 #include "log.h"
 
-void* main_app(void* arg)
+int main(int argc, char **argv)
 {
-    char *__flag_stop = (char*) arg;
     while (1) {
         // Read ADC values from multicast socket
         // TODO
@@ -20,9 +17,5 @@ void* main_app(void* arg)
         // FIXME: after implementing this function, remove lines below
         __LOG();
         sleep(1);
-        
-        if (*__flag_stop) break;
     }
-    
-    std::cerr << "APP thread ending..." << std::endl;
 }
