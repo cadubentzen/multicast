@@ -25,14 +25,7 @@ void ctrlc_handle(int sig) {
 
 int main(int argc, char **argv)
 {
-    if (argc != 2) {
-        cerr << "Usage: " << argv[0]
-             << " <group_number>"
-             << endl;
-        exit(1);
-    }
-
-    int adc_port = 9700 + atoi(argv[1]);
+    int adc_port = 9700 + GROUP_NUMBER;
 
     cerr << "IP = "        << MULTICAST_IP << endl
          << "ADC_PORT = "  << adc_port << endl

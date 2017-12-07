@@ -18,14 +18,14 @@ void ctrlc_handle(int sig) {
 
 int main(int argc, char **argv)
 {
-    if (argc != 3) {
+    if (argc != 2) {
         cerr << "Usage: " << argv[0]
-             << " <adc_group> <bool_group>" << endl;
+             << " <adc_group>" << endl;
         exit(1);
     }
 
     int adc_port = 9700 + atoi(argv[1]);
-    int bool_port = 9800 + atoi(argv[2]);
+    int bool_port = 9800 + GROUP_NUMBER;
 
     cerr << "IP = " << MULTICAST_IP << endl
          << "ADC_PORT = " << adc_port << endl

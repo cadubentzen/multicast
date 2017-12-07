@@ -8,3 +8,6 @@ Debug/
 
 # For YouCompleteMe
 compile_commands.json
+
+# Atom files (I think)
+*.gch
