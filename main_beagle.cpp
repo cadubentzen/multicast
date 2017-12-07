@@ -11,6 +11,7 @@
 using std::cerr;
 using std::endl;
 
+pthread_t thread_adc, thread_gpio;
 int flag_stop = 0;
 
 void ctrlc_handle(int sig) {
@@ -18,6 +19,8 @@ void ctrlc_handle(int sig) {
     // This flag is checked in the threads, so setting
     // it to one stops the threads.
     flag_stop = 1;
+    // GPIO thread needs to be cancelled because it is blocked in socket read()
+    pthread_cancel(thread_gpio);
 }
 
 int main(int argc, char **argv)
@@ -30,12 +33,11 @@ int main(int argc, char **argv)
     }
 
     int adc_port = 9700 + atoi(argv[1]);
-    
+
     cerr << "IP = "        << MULTICAST_IP << endl
          << "ADC_PORT = "  << adc_port << endl
          << endl;
 
-    pthread_t thread_adc, thread_gpio, thread_app;
 
     signal(SIGINT, ctrlc_handle);
 

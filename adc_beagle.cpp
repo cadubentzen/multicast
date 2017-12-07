@@ -1,7 +1,5 @@
 #include "adc.h"
 
-ADC *ADC::m_adc = 0;
-
 void ADC::initialize()
 {
     // TODO: implement required initialization for Beagle ADC

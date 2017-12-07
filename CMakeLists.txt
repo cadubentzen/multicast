@@ -11,6 +11,8 @@ set(Multicast_SOURCES
     multicast_receiver.cpp)
 
 set(Beagle_SOURCES
+    adc.cpp
+    gpio.cpp
     subroutine_adc.cpp
     subroutine_gpio.cpp
     main_beagle.cpp)
@@ -19,10 +21,12 @@ if(BEAGLE)
     add_definitions(-DBEAGLE)
 
     list(APPEND Beagle_SOURCES
-         adc_beagle.cpp)
+         adc_beagle.cpp
+         gpio_beagle.cpp)
 else()
     list(APPEND Beagle_SOURCES
-         adc_fake.cpp)
+         adc_fake.cpp
+         gpio_fake.cpp)
 endif()
 
 set(App_SOURCES

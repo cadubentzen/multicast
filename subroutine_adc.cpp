@@ -14,7 +14,7 @@ using std::endl;
 void* subroutine_adc(void* arg)
 {
     cerr << "Starting ADC thread..." << endl;
-   
+
     ThreadDataADC *data = static_cast<ThreadDataADC*>(arg);
     int port = data->port;
     int *flag_stop = data->flag_stop;

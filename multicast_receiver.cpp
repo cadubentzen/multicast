@@ -12,7 +12,7 @@ MulticastReceiver::MulticastReceiver(const char* ip, int port)
         perror("Error opening datagram socket");
         exit(1);
     }
-    
+
     int reuse = 1;
     if (setsockopt(m_sd, SOL_SOCKET, SO_REUSEADDR, (char*)&reuse, sizeof(reuse)) < 0) {
        perror("Error setting SO_REUSEADDR");
