@@ -7,6 +7,7 @@
 
 #include "gpio.h"
 #include "multicast_receiver.h"
+#include "lcd.h"
 
 using std::cerr;
 using std::endl;
@@ -18,6 +19,7 @@ void* subroutine_gpio(void* arg)
     int *flag_stop = static_cast<int*>(arg);
 
     GPIO::singleton()->initialize();
+    LCD::singleton()->initialize();
 
     bool bool_values[8];
     size_t len_bool = sizeof(bool_values);
@@ -40,12 +42,13 @@ void* subroutine_gpio(void* arg)
 #endif
 
         // Write values to LCD display
-        // TODO
+        LCD::singleton()->displayBoolArray8(bool_values);
 
         sleep(1);
     }
 
     GPIO::singleton()->finalize();
+    LCD::singleton()->finalize();
 
     cerr << "GPIO thread ending..." << endl;
 }
