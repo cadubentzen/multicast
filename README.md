@@ -29,7 +29,7 @@ In case `-DBEAGLE` is not passed or is passed as OFF, fake modules will generate
 ## Running ##
 After compiling, in the Debug or Release folder there will be two executables:
 - **beagle**: This program is supposed to run on the BeagleBone during project presentation. To run it, our group will run `./beagle 1` because we are group number 1.
-- **app**: This is the app that receives two floating points values from a ADC coming from a Multicast Socket and generates a bool array writing to another Multicast socket in a different port. To run it, we could run from example `./app 9701 9805` which means it will read float-point values from port 9701 and write a boolean array to port 9805. This program can run in a different computer or in the BeagleBone as well.
+- **app**: This is the app that receives two floating points values from a ADC coming from a Multicast Socket and generates a bool array writing to another Multicast socket in a different port. To run it, we could run from example `./app 1 1` which means it will read float-point values from group 1 and write a boolean array to group 1, respectively. This program can run in a different computer or in the BeagleBone as well.
 
 ## Project Description (Portuguese) ##
 Trabalho Final - Comunicação Multicast

@@ -1,7 +1,11 @@
 #include "adc.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 void ADC::initialize()
 {
+    srand(time(0));
 }
 
 void ADC::finalize()
@@ -10,10 +14,10 @@ void ADC::finalize()
 
 float ADC::getADC1()
 {
-    return 0.5;
+    return (rand()%1001) / 1000.0;
 }
 
 float ADC::getADC2()
 {
-    return 0.7;
+    return (rand()%1001) / 1000.0;
 }

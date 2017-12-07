@@ -20,12 +20,12 @@ int main(int argc, char **argv)
 {
     if (argc != 3) {
         cerr << "Usage: " << argv[0]
-             << " <adc_port> <bool_port>" << endl;
+             << " <adc_group> <bool_group>" << endl;
         exit(1);
     }
 
-    int adc_port = atoi(argv[1]);
-    int bool_port = atoi(argv[2]);
+    int adc_port = 9700 + atoi(argv[1]);
+    int bool_port = 9800 + atoi(argv[2]);
 
     cerr << "IP = " << MULTICAST_IP << endl
          << "ADC_PORT = " << adc_port << endl

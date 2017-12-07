@@ -24,6 +24,8 @@ void* subroutine_gpio(void* arg)
     bool bool_values[8];
     size_t len_bool = sizeof(bool_values);
 
+    cerr << endl;
+
     while (1) {
         // Read GPIO to select port
         int port = 9800 + GPIO::singleton()->getFourSwitchValue();
