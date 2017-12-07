@@ -3,44 +3,44 @@
 #include <unistd.h>
 #include <iostream>
 
+#include "config.h"
+
 #include "adc.h"
+#include "multicast_sender.h"
 
-#include "log.h"
-
-#ifdef BEAGLE
-typedef BeagleADC PlatformADC;
-#else
-typedef FakeADC PlatformADC;
-#endif
+using std::cerr;
+using std::endl;
 
 void* subroutine_adc(void* arg)
 {
-    ThreadData *data = static_cast<ThreadData*>(arg);
+    cerr << "Starting ADC thread..." << endl;
+   
+    ThreadDataADC *data = static_cast<ThreadDataADC*>(arg);
+    int port = data->port;
+    int *flag_stop = data->flag_stop;
+
     float adc_values[2];
+    size_t len = sizeof(adc_values);
 
-    PlatformADC::singleton()->initialize();
+    ADC::singleton()->initialize();
 
-    // MulticastSocket multicastSocket (IP, PORT);
+    MulticastSender sender (MULTICAST_IP, port);
 
     while (1) {
         // Read ADC values
-        adc_values[0] =  PlatformADC::singleton()->getADC1();
-        adc_values[1] =  PlatformADC::singleton()->getADC2();
+        adc_values[0] =  ADC::singleton()->getADC1();
+        adc_values[1] =  ADC::singleton()->getADC2();
 
         // Write ADC values to multicast socket
-        //  multicastSocket.write((void*)adc_values, sizeof(adc_values));
-        // TODO
+        sender.send((void*)adc_values, len);
 
         // Sleep 1 second
         sleep(1);
 
-        // FIXME: After implementing this function, remove
-        //        lines below
-        __LOG();
-
-        if (data->flag_stop) break;
-        // TODO: Add a flag to stop the thread
+        if (*flag_stop) break;
     }
 
-    std::cerr << "ADC thread ending..." << std::endl;
+    ADC::singleton()->finalize();
+
+    cerr << "ADC thread ending..." << endl;
 }
