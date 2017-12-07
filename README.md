@@ -20,7 +20,7 @@ For example, to compile in Release mode for the BeagleBone Black:
 ```
 $ mkdir Release
 $ cd Release
-$ cmake -DCMAKE_BUILD_TYPE -DBEAGLE=ON ..
+$ cmake -DCMAKE_BUILD_TYPE=Release -DBEAGLE=ON ..
 $ make
 ```
 
