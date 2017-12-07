@@ -42,7 +42,7 @@ Desenvolver as seguintes aplicações:
 
   - Thread que recebe no endereço 225.0.0.37 e porta 98--, um array de booleano de 08 posições. A porta deve ser configurada a cada segundo por valores lidos de 04 chaves digitais conectadas a portas GPIO. Se a configuração das chaves for 0101 (por exemplo), o valor da porta será 9805 e assim por diante. Os valores contidos no vetor booleano devem ser escritos em portas GPIO associadas a um dysplay de 07 segmentos.
 
- 
+
 
 - Escrever um programa num computador (denominado de aplicação genérica) lê os arrays ofiundos das portas 97-- e escreve um array booleano de 08 posições nas portas 98--.
 
@@ -120,3 +120,5 @@ echo "0" > /sys/class/hd44780/lcd0/cursor_display
 1. ADC on BeagleBone. <http://beaglebone.cameon.net/home/reading-the-analog-inputs-adc>
 2. How to read ADC values in kernel 4.x. <https://askubuntu.com/questions/882433/enable-adc-input-on-beaglebone-with-4-x-kernel>
 3. <https://www.teachmemicro.com/beaglebone-black-adc/>
+4. <https://www.tecmint.com/ifconfig-command-examples/>
+5. <https://askubuntu.com/questions/359856/share-wireless-internet-connection-through-ethernet>
