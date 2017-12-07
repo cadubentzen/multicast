@@ -8,7 +8,7 @@ void GPIO::finalize()
 {
 }
 
-// Fake implementation always return 0101 = 5 in getFourSwitchValues()
+// Fake implementation always return 0001 = 1 in getFourSwitchValues()
 bool GPIO::getGPIO1()
 {
     return 1;
@@ -21,7 +21,7 @@ bool GPIO::getGPIO2()
 
 bool GPIO::getGPIO3()
 {
-    return 1;
+    return 0;
 }
 
 bool GPIO::getGPIO4()
