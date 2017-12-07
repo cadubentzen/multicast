@@ -32,6 +32,17 @@ iptables --table nat --append POSTROUTING --out-interface wlan0 -j MASQUERADE
 iptables --append FORWARD --in-interface eth0 -j ACCEPT
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
+
+## Configure ethernet ##
+
+see host information ip 10.42.0.1
+
+
+ifconfig eth0 10.42.0.2
+ifconfig eth0 netmask 255.255.255.0
+route add default gw 10.42.0.1 eth0
+
+
 ## Enable ADC read in Kernel 4.x ##
 
 With root provileges, run
