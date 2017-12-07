@@ -6,27 +6,32 @@ find_package(Threads REQUIRED)
 
 option(BEAGLE "Whether we are compiling for BeagleBone" OFF)
 
+include_directories(${CMAKE_SOURCE_DIR} adc gpio lcd multicast subroutines)
+
 set(Multicast_SOURCES
-    multicast_sender.cpp
-    multicast_receiver.cpp)
+    multicast/multicast_sender.cpp
+    multicast/multicast_receiver.cpp)
 
 set(Beagle_SOURCES
-    adc.cpp
-    gpio.cpp
-    subroutine_adc.cpp
-    subroutine_gpio.cpp
+    adc/adc.cpp
+    gpio/gpio.cpp
+    lcd/lcd.cpp
+    subroutines/subroutine_adc.cpp
+    subroutines/subroutine_gpio.cpp
     main_beagle.cpp)
 
 if(BEAGLE)
     add_definitions(-DBEAGLE)
 
     list(APPEND Beagle_SOURCES
-         adc_beagle.cpp
-         gpio_beagle.cpp)
+         adc/adc_beagle.cpp
+         gpio/gpio_beagle.cpp
+         lcd/lcd_beagle.cpp)
 else()
     list(APPEND Beagle_SOURCES
-         adc_fake.cpp
-         gpio_fake.cpp)
+         adc/adc_fake.cpp
+         gpio/gpio_fake.cpp
+         lcd/lcd_fake.cpp)
 endif()
 
 set(App_SOURCES

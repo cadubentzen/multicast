@@ -1,13 +1,56 @@
 # Multicast project #
 
-This project was developed as part of a university (UFRN) course and demonstrates functionalities of a semaphore while dealing with threads. It uses a a Bleaglebone Black (BBB) that receives analog input through its ADC to control the simulated speed which a consumer and a producer realize their activities. The interaction between consumer and producer makes a stack of tokens to grow or to diminish as the threads execute.
+This project as developed as part of a Real-time Systems Engineering course from Universidade Federal do Rio Grande do Norte.
 
 ##### Youtube Video Explanation #####
+**TODO**
+
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/cfzUDSFr0QY/0.jpg)](https://youtu.be/cfzUDSFr0QY)
 
 ![BeagleBone](http://beagleboard.org/static/images/cape-headers.png)
 
-## Getting started ##
+## Building ##
+
+The compilation process uses CMake >= 2.8 and a few flags may configure the project:
+- `CMAKE_BUILD_TYPE`: Release or Debug can be used. Debug enables a few extra logs, so the programs will be more verbose.
+- `BEAGLE`: Setting this enables compilation for BeagleBone Black, using ADC, GPIO and LCD peripherals.
+
+For example, to compile in Release mode for the BeagleBone Black:
+
+```
+$ mkdir Release
+$ cd Release
+$ cmake -DCMAKE_BUILD_TYPE=Release -DBEAGLE=ON ..
+$ make
+```
+
+In case `-DBEAGLE` is not passed or is passed as OFF, fake modules will generate values for the ADC and GPIO modules and the LCD module will print to the console.
+
+## Running ##
+After compiling, in the Debug or Release folder there will be two executables:
+- **beagle**: This program is supposed to run on the BeagleBone during project presentation. To run it, our group will run `./beagle 1` because we are group number 1.
+- **app**: This is the app that receives two floating points values from a ADC coming from a Multicast Socket and generates a bool array writing to another Multicast socket in a different port. To run it, we could run from example `./app 9701 9805` which means it will read float-point values from port 9701 and write a boolean array to port 9805. This program can run in a different computer or in the BeagleBone as well.
+
+## Project Description (Portuguese) ##
+Trabalho Final - Comunicação Multicast
+
+Desenvolver as seguintes aplicações:
+
+- Na Beagle Board
+
+  - Thread que lê a cada segundo valores de 02 ADCs (ADC1 e ADC2), conectados respectivamente a 02 potenciômetros. Os valores devem estar entre 0 e 1. Enviar esses valores num array de 02 posições pelo endereço multicast 225.0.0.37 porta 97-- (para o grupo 01, porta 9701; para o grupo 02, porta 9702 e assim por diante).
+
+  - Thread que recebe no endereço 225.0.0.37 e porta 98--, um array de booleano de 08 posições. A porta deve ser configurada a cada segundo por valores lidos de 04 chaves digitais conectadas a portas GPIO. Se a configuração das chaves for 0101 (por exemplo), o valor da porta será 9805 e assim por diante. Os valores contidos no vetor booleano devem ser escritos em portas GPIO associadas a um dysplay de 07 segmentos.
+
+ 
+
+- Escrever um programa num computador (denominado de aplicação genérica) lê os arrays ofiundos das portas 97-- e escreve um array booleano de 08 posições nas portas 98--.
+
+  - O grupo está livre para escrever qualquer programa que utilize essas funcionalidades.
+
+As Beagles Boards deverão estar conectadas via Wifi. Quando conectadas no Wifi, as placas precisam estar alimentadas na tomada (via USB não funciona).
+
+## Useful Information ##
 ### Connecting to the Bleaglebone Black ###
 On a Linux system
 1. Connect your BeagleBone to your computer by using a Mini USB cable.
@@ -72,61 +115,6 @@ Disable cursor blink and cursos display
 echo "0" > /sys/class/hd44780/lcd0/cursor_blink
 echo "0" > /sys/class/hd44780/lcd0/cursor_display
 ```
-
-
-## Building ##
-Requirements:
-- CMake >= 3.5.1
-
-### Release ###
-```
-$ mkdir Release
-$ cd Release
-$ cmake ..
-$ make
-$ ./multicast
-```
-
-### Debug ###
-To activate logs:
-```
-$ mkdir Debug
-$ cd Debug
-$ cmake -DCMAKE_BUILD_TYPE=Debug ..
-$ make
-$ ./multicast
-```
-
-
-## Description in Portuguese ##
-Questão: Resolver o problema do Produtor X Consumidor com buffer de tamanho 7.
-
-Solução:
-
-- Main -- criar as outras threads e os semáforos e o buffer (de tamanho 7). Iniciar o buffer com valor ZERO.
-
-- Thread_Produtor
-    - Loop: produzir (incrementar de um o valor do buffer, até 7). Escrever o valor do buffer no display de 7 seguimentos. Esperar por um tempo proporcional à tensão lida do ADC1.
-
-- Thread_Consumidor
-   - Loop: consumir (decrementar de um o valor do buffer, até 0). Escrever o valor do buffer no display de 7 seguimentos. Esperar por um tempo proporcional à tensão lida do ADC2.
-
-- Ao pressionar o botão reset, a aplicação é reiniciada. (Este botão está associado a uma entrada digital).
-
-
-
-Material necessário:
-
-- 01 placa Beagle Board
-- 01 display de 7 seguimentos + 07 resistores (associados a saídas digitais).
-- 02 potenciômetros (associados aos ADCs)
-- 01 botão reset + 01 resistor (associados a uma entrada digital).
-
-
-Apresentar os resultados em vídeo.
-
-- Demonstre que a solução está correta (mude a velocidade de produção e consumo para exibir isto).
-- Apresente uma Rede de Petri para explicar a solução implementada.
 
 ## References ##
 1. ADC on BeagleBone. <http://beaglebone.cameon.net/home/reading-the-analog-inputs-adc>

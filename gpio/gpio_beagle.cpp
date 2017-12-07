@@ -1,3 +1,5 @@
+#include "gpio.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,15 +7,19 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <poll.h>
-#include "gpio.h"
 
-GPIO *GPIO::m_gpio = 0;
+/****************************************************************
+* Constants
+****************************************************************/
 
-int GPIO::getFourSwitchValue()
-{
-    return  (getGPIO1()) | (getGPIO2() << 1) | (getGPIO3() << 2) | (getGPIO4() << 3);
-}
+#define SYSFS_GPIO_DIR "/sys/class/gpio"
+#define POLL_TIMEOUT (3 * 1000) /* 3 seconds */
+#define MAX_BUF 64
 
+#define GPIO_01 68
+#define GPIO_02 67
+#define GPIO_03 66
+#define GPIO_04 69
 
 /****************************************************************
 * gpio_export
@@ -183,4 +189,54 @@ static int gpio_fd_open(unsigned int gpio)
 static int gpio_fd_close(int fd)
 {
     return close(fd);
+}
+
+// GPIO Methods
+
+void GPIO::initialize()
+{
+    gpio_export(GPIO_01);
+    gpio_set_dir(GPIO_01, 0);
+
+    gpio_export(GPIO_02);
+    gpio_set_dir(GPIO_02, 0);
+
+    gpio_export(GPIO_03);
+    gpio_set_dir(GPIO_03, 0);
+
+    gpio_export(GPIO_04);
+    gpio_set_dir(GPIO_04, 0);
+}
+
+void GPIO::finalize()
+{
+    // FIXME: should GPIOs be unexported here?
+}
+
+bool GPIO::getGPIO1()
+{
+    unsigned int gpio01_value;
+    gpio_get_value(GPIO_01, &gpio01_value);
+    return (bool) gpio01_value;
+}
+
+bool GPIO::getGPIO2()
+{
+    unsigned int gpio02_value;
+    gpio_get_value(GPIO_02, &gpio02_value);
+    return (bool) gpio02_value;
+}
+
+bool GPIO::getGPIO3()
+{
+    unsigned int gpio03_value;
+    gpio_get_value(GPIO_03, &gpio03_value);
+    return (bool) gpio03_value;
+}
+
+bool GPIO::getGPIO4()
+{
+    unsigned int gpio04_value;
+    gpio_get_value(GPIO_04, &gpio04_value);
+    return (bool) gpio04_value;
 }
